@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Ten Qing</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="__STATICA__/i/favicon.png">
+    <link rel="stylesheet" href="__STATICA__/css/amazeui.min.css"/>
+    <style>
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 200%;
+            color: #333;
+            margin-top: 30px;
+        }
+        .header p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="am-g">
+        <h1>Ten Qing</h1>
+        <p>Integrated Development Environment<br/>代码生成，界面设计，调试，编译,一切以简洁唯美！</p>
+    </div>
+    <hr />
+</div>
+<div class="am-g">
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+        <h3>注册/Register</h3>
+        <hr>
+        <form method="post" class="am-form">
+            <label for="username">用户名：/username:</label>
+            <input type="text" name="username" id="username" value="">
+            <br>
+            <label for="password">密码:/password:</label>
+            <input type="password" name="password" id="password" value="">
+            <br>
+            <label for="conpass">确认密码:/password:</label>
+            <input type="password" name="conpass" id="conpass" value="">
+            <br>
+            <label for="nickname">昵称:/nickname:</label>
+            <input type="text" name="nickname" id="nickname" value="">
+            <br>
+            <label for="Email">邮箱:/Emil:</label>
+            <input type="email" name="email" id="email" value="">
+
+            <br />
+            <div class="am-cf">
+                <input type="submit" id="submit" name=""  value="确定 | 提交" class="am-btn am-btn-primary am-btn-sm am-fl">
+
+                <a href="{:url('index/index/index')}" class="am-btn am-btn-default am-btn-sm am-fr">返回首页^_^</a>
+            </div>
+        </form>
+        <hr>
+        <p>© 2019 这个人懒得很不想写QAQ</p>
+    </div>
+</div>
+<script src="__STATICA__/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATICA__/js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+    $(function () {
+        $('#submit').click(function () {
+            $.ajax({
+                url:"{:url('index/login/register')}",
+                type:'post',
+                data:$('form').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if (data.code == 1){
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 2000
+                        },function () {
+                            location.href = data.url;
+                        });
+                    }else {
+                        layer.open({
+                            title:'注册失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+</script>
+</body>
+</html>
+

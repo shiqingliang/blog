@@ -1,0 +1,78 @@
+{include file="public/_header"/}
+{include file="public/_left"/}
+    <!-- sidebar end -->
+
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">栏目添加</strong> / <small>pageadd</small></div>
+            </div>
+
+            <hr/>
+
+                <div class="am-u-sm-12 am-u-md-8 am-u-md-push-0">
+                    <form class="am-form am-form-horizontal">
+                        <div class="am-form-group">
+                            <label for="catename" class="am-u-sm-3 am-form-label">栏目名称</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="name" name="catename" placeholder="栏目名称">
+                                <small>栏目名称</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="sort" class="am-u-sm-3 am-form-label">排序</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="sort" name="sort" placeholder="排序">
+                                <small>数字越大 排序越靠后</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button type="button" id="cate" class="am-btn am-btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{include file="public/floot"/}
+        
+        <script>
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+            });
+
+            $(function () {
+                $('#cate').click(function () {
+                    $.ajax({
+                        url:"{:url('admin/cate/add')}",
+                        type:'post',
+                        data:$('form').serialize(),
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.code == 1){
+                                layer.msg(data.msg,{
+                                    icon:6,
+                                    time:2000,
+                                },function () {
+                                    location.href = data.url;
+                                });
+                            }else {
+                                layer.open({
+                                    title:"栏目添加失败！",
+                                    content:data.msg,
+                                    icon:5,
+                                    anim:5
+                                });
+                            }
+                        }
+                    });
+                    return false;
+                });
+            });
+
+
+        </script>

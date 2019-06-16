@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Ten Qing</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="__STATICA__/i/favicon.png">
+    <link rel="stylesheet" href="__STATICA__/css/amazeui.min.css"/>
+    <style>
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 200%;
+            color: #333;
+            margin-top: 30px;
+        }
+        .header p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="am-g">
+        <h1>Ten Qing</h1>
+        <p>Integrated Development Environment<br/>代码编辑，代码生成，界面设计，调试，编译</p>
+    </div>
+    <hr />
+</div>
+<div class="am-g">
+    <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+        <h3>找回密码/ForgerPassword</h3>
+        <hr>
+
+        <form method="post" class="am-form">
+            <label for="email">邮箱：/Email:</label>
+            <input type="email" name="email" id="email" value="">
+            <small>输入要找回密码的用户邮箱</small>
+            <br>
+            <br>
+                <label for="code">验证码:/Code:</label>
+                <input type="text" name="code" id="code" value="">
+                <small>输入验证码</small>
+            <br />
+            <div class="am-cf">
+                <input type="submit" name="" id="login"  value="发送验证" class="am-btn am-btn-primary am-btn-sm am-fl">
+                <a href="{:url('admin/login/index')}" class="am-btn am-btn-default am-btn-sm am-fr">返回登录</a>
+
+            </div>
+        </form>
+        <hr>
+        <p>© 2019 AllMobilize, Inc. Licensed under MIT license.</p>
+    </div>
+</div>
+<script src="__STATICA__/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATICA__/js/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+    //
+
+    $(function () {
+
+        return false;
+    })
+
+</script>
+</body>
+</html>

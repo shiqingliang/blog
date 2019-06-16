@@ -1,0 +1,127 @@
+
+{include file='public/_header' /}
+{include file='public/_left' /}
+    <!-- content start -->
+    <div class="admin-content">
+        <div class="admin-content-body">
+            <div class="am-cf am-padding am-padding-bottom-0">
+                <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">文章添加</strong> / <small>Article adding</small></div>
+            </div>
+
+            <hr/>
+
+                <div class="am-u-sm-12 am-u-md-8 am-u-md-push-0">
+                    <form class="am-form am-form-horizontal">
+                        <div class="am-form-group">
+                            <label for="Article-title" class="am-u-sm-3 am-form-label">文章标题</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="Article-title" name="title" placeholder="文章标题">
+                                <small>输入你的文章标题</small>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="" class="am-u-sm-3 am-form-label">作者</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="" name="author" placeholder="作者">
+                                <small>输入你的名称</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="Label" class="am-u-sm-3 am-form-label">标签</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="tags" id="Label" placeholder="标签">
+                                <small>输入你的标签</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-form-group-sm">
+                            <div class="am-u-sm-offset-3 am-u-sm-10">
+                                <div class="am-checkbox">
+                                    <label>
+                                        <input name="is_top" type="checkbox" value="1">是否推荐
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-3 am-u-md-3 am-text-right">所属导航</div>
+                            <div class="am-u-sm-8 am-u-md-9">
+                                <select id="cate_id" name="cate_id" class="form-control" data-am-selected="{btnSize: 'sm'}">
+                                    <option value="">请选项</option>
+                                    {volist name="cates" id="vo"}
+                                    <option value="{$vo.id}">{$vo.catename}</option>
+                                {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="" class="am-u-sm-3 am-form-label">文章概要</label>
+                            <div class="am-u-sm-9">
+                                <textarea class="form-control" name="desc" rows="3" id="desc" placeholder="输入文章概要"></textarea>
+                                <small>输入文章概要</small>
+                            </div>
+                        </div>
+
+
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">文章内容</label>
+                            </div>
+                        <div class="am-u-md-12" >
+                            <textarea name="content" id="content"></textarea>
+                        </div>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3" style="margin-top: 10px">
+                                <button type="button" class="am-btn am-btn-primary" id="articleadd">添加</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+
+{include file='public/floot'/}
+        <script type="text/javascript" src="__STATICA__/ueditor/ueditor.config.js"></script>
+        <script type="text/javascript" src="__STATICA__/ueditor/ueditor.all.js"></script>
+        <script type="text/javascript">
+            //富文本编辑器
+            $(function () {
+                UE.getEditor('content');
+            })
+
+        </script>
+        <script>
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+            });
+
+            $(function () {
+                $('#articleadd').click(function () {
+                    $.ajax({
+                        url:"{:url('admin/article/add')}",
+                        type:'post',
+                        data:$('form').serialize(),
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.code == 1){
+                                layer.msg(data.msg,{
+                                    icon:6,
+                                    time:2000,
+                                },function () {
+                                    location.href = data.url;
+                                });
+                            }else {
+                                layer.open({
+                                    title:"文章添加失败！",
+                                    content:data.msg,
+                                    icon:5,
+                                    anim:5
+                                });
+                            }
+                        }
+                    });
+                   return false;
+                });
+            });
+        </script>

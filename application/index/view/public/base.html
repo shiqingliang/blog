@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{block name="title"}Shiqingliang-blog{/block}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="__STATICA__/i/favicon.png">
+    <link rel="stylesheet" href="__STATICA__/css/amazeui.min.css"/>
+    <style>
+        @media only screen and (min-width: 1200px) {
+            .blog-g-fixed {
+                max-width: 1200px;
+            }
+        }
+
+        @media only screen and (min-width: 641px) {
+            .blog-sidebar {
+                font-size: 1.4rem;
+            }
+        }
+
+        .blog-main {
+            padding: 20px 0;
+        }
+
+        .blog-title {
+            margin: 10px 0 20px 0;
+        }
+
+        .blog-meta {
+            font-size: 14px;
+            margin: 10px 0 20px 0;
+            color: #222;
+        }
+
+        .blog-meta a {
+            color: #27ae60;
+        }
+
+        .blog-pagination a {
+            font-size: 1.4rem;
+        }
+
+        .blog-team li {
+            padding: 4px;
+        }
+
+        .blog-team img {
+            margin-bottom: 0;
+        }
+
+        .blog-content img,
+        .blog-team img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .blog-footer {
+            padding: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<header class="am-topbar">
+    <h1 class="am-topbar-brand">
+        <a href="{:url('index/index/index')}">T Q_BLOG</a>
+    </h1>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
+            data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
+            class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
+        <ul class="am-nav am-nav-pills am-topbar-nav">
+            <li class="am-active"><a href="{:url('index/index/index')}"> 首页</a></li>
+            <li><a href="#">项目</a></li>
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    菜单 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li class="am-dropdown-header">标题</li>
+                    <li><a href="{:url('admin/oypage/help')}">关于我们</a></li>
+                    <li><a href="#">关于字体</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <form class="am-topbar-form am-topbar-left am-form-inline am-topbar-right" role="search" action="{:url('index/index/search')}" method="post">
+
+            <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" id="search" placeholder="搜索文章">
+            </div>
+            <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
+
+            {if session('index.state') == 0}
+            <button
+                    type="button"
+                    class="am-btn am-btn-primary"
+                    data-am-modal="{target: '#my-alert'}">
+                Login
+            </button>
+            <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert" >
+                <div class="am-modal-dialog" >
+                    <div class="am-modal-hd" style="margin-top: 7px"><b>Login/登录</b></div>
+                    <div></div>
+                    <div class="am-modal-bd">
+                        <fieldset class="am-form-set">
+                            <p ><input style="width: 250px" name="username" type="text" class="am-form-field " placeholder="账户"/></p>
+                            <p><input  style="width: 250px" name="password" type="password" class="am-form-field " placeholder="密码"/></p>
+                        </fieldset>
+                        <div class="am-cf">
+                            <a href="index/login/register"  style="margin-right: 30px">注册用户</a>
+                            <a href="admin/login/forget" >忘记密码 ^_^? </a>
+                        </div>
+
+                    </div>
+
+                    <div class="am-modal-footer">
+                        <span class="am-modal-btn" id="Login">确定</span>
+                    </div>
+                </div>
+            </div>
+            <!--<a href="{:url('admin/login/index')}" class="am-btn am-btn-secondary am-btn-sm">Login</a>-->
+            {else}
+            <li class="am-dropdown" data-am-dropdown>
+                    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <span class="am-icon-user"></span><strong>{:session('index.nickname')}</strong>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a href="#" id="loginOut"><span class="am-icon-power-off"></span>退出</a></li>
+                    </ul>
+                </li>
+                {/if}
+        </form>
+
+     
+
+    </div>
+
+    
+
+</header>
+{block name="body"}
+<div class="am-g am-g-fixed blog-g-fixed">
+    <div class="am-u-md-8">
+        <article class="blog-main">
+            <h3 class="am-article-title blog-title">
+                <a href="#">十清凉(0.0)</a>
+            </h3>
+            <h4 class="am-article-meta blog-meta">by <a href="">open</a> posted on 2014/06/17 under <a href="#">字体</a></h4>
+
+            <div class="am-g blog-content">
+                <div class="am-u-lg-7">
+                    <p>你自信滿滿的跟客戶進行第一次 demo。秀出你精心設計的內容時，你原本期許客戶冷不防地掉下感動的眼淚。</p>
+
+                    <p>因為那實在是太高級了。</p>
+
+                    <p>除了各項基本架構幾乎完美無缺之外，內文是高貴的，有著一些距離感的，典雅的襯線字體。不是 Times New
+                        Roman，而是很少有人見過的，你精心挑選過的字體，凸顯你品味的高超。而且它並沒有花上你與業主一毛錢，或許這也非常重要。</p>
+                </div>
+                <div class="am-u-lg-5">
+                    <p><img src="http://pntid72wo.bkt.clouddn.com/78681201903130941532159.jpg"></p>
+                </div>
+            </div>
+            <p>因為那實在是太高級了。</p>
+        </article>
+
+        <hr class="am-article-divider blog-hr">
+
+        <div data-am-widget="list_news" class="am-list-news am-list-news-default" >
+            <!--列表标题-->
+            <div data-am-widget="titlebar" class="am-titlebar am-titlebar-default" >
+                <h2 class="am-titlebar-title ">
+                    {block name="article_name"}相关文章{/block}
+                </h2>
+
+                <nav class="am-titlebar-nav">
+                    <a href="#more" class="">more &raquo;</a>
+                </nav>
+            </div>
+
+                <!--列表标题-->
+
+            <div class="am-list-news-bd">
+                <ul class="am-list">
+                    {volist name="article" id="vo"}
+                    <li class="am-g am-list-item-dated">
+                        <a href="{:url('index/article/index',['id'=>$vo.id])}" class="am-list-item-hd " title="作者：{$vo.author}">{$vo.title}</a>
+                        <span class="am-list-date">{$vo.create_time}</span>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+
+        <ul class="am-pagination  am-fr admin-content-pagination">
+            {$article->render()|replace}
+        </ul>
+
+
+
+    </div>
+
+    <div class="am-u-md-4 blog-sidebar">
+        <div class="am-panel-group">
+            <section class="am-panel am-panel-default">
+                <div class="am-panel-hd">关于我们</div>
+                <div class="am-panel-bd">
+                    <p>我们团队是一个萌新团队！在开发中还在不断进步，我们的团员都是非常热爱编程，爱开源，爱分享的。希望
+                    我们的团队，能够越来越好!</p>
+                    <a class="am-btn am-btn-success am-btn-sm" href="#">查看更多 →</a>
+                </div>
+            </section>
+            <section class="am-panel am-panel-default">
+                <div class="am-panel-hd">相关栏目</div>
+                <ul class="am-list blog-list">
+                    {volist name="cates" id="vo"}
+                    <li style="font-size:1em;text-align: center" ><a href="{:url('index/index/index',['id' => $vo.id])}"><strong>{$vo.catename}</strong></a></li>
+                    {/volist}
+                </ul>
+            </section>
+
+            <section class="am-panel am-panel-default">
+                <div class="am-panel-hd">团队成员</div>
+                <div class="am-panel-bd">
+                    <ul class="am-avg-sm-4 blog-team">
+                        <li><img class="am-thumbnail"
+                                 src="http://pntid72wo.bkt.clouddn.com/5ac90201903051908081457.gif"/>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="am-panel am-panel-default">
+                    <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-3'}">最近留言<span class="am-icon-chevron-down am-fr" ></span></div>
+                    <div class="am-panel-bd am-collapse am-in am-cf" id="collapse-panel-3">
+                        <ul class="am-comments-list admin-content-comment">
+                            <li class="am-comment">
+                                <a href="#"><img src="http://pntid72wo.bkt.clouddn.com/5ac90201903051908081457.gif" alt="" class="am-comment-avatar" width="48" height="48"></a>
+                                <div class="am-comment-main">
+                                    <header class="am-comment-hd">
+                                        <div class="am-comment-meta"><a href="#" class="am-comment-author">小虎</a> 评论于 <time>2019-2-12 15:00</time></div>
+                                    </header>
+                                    <div class="am-comment-bd"><p>有效减少为兼容旧浏览器的臃肿代码.</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="am-comment">
+                                <a href="#"><img src="http://pntid72wo.bkt.clouddn.com/5ac90201903051908081457.gif" alt="" class="am-comment-avatar" width="48" height="48"></a>
+                                <div class="am-comment-main">
+                                    <header class="am-comment-hd">
+                                        <div class="am-comment-meta"><a href="#" class="am-comment-author">十清</a> 评论于 <time>2019-2-12 5:30</time></div>
+                                    </header>
+                                    <div class="am-comment-bd"><p>有效减少为兼容旧浏览器的臃肿代码.</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <ul class="am-pagination am-fr admin-content-pagination">
+                            <li class="am-disabled"><a href="#">&laquo;</a></li>
+                            <li class="am-active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+<hr>
+<footer class="blog-footer">
+    <p class="am-padding-left">{block name="footer"}shiqingliang{/block}</p>
+
+</footer>
+<script src="__STATICA__/js/jquery-1.8.2.js"></script>
+<script src="__STATICA__/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATICA__/js/amazeui.min.js"></script>
+<script src="__STATICA__/js/app.js"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+
+    $(function () {
+            $('.pagination').addClass('am-pagination');
+            $('.disabled').addClass('am-disabled');
+            $('.active').addClass('am-active');
+        });
+    //登录
+    $(function () {
+        $('#Login').click(function () {
+            $.ajax({
+                url:"{:url('index/login/login')}",
+                type:'post',
+                data:$('form').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if (data.code == 1){
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 1000
+                        },function () {
+                            location.href = data.url;
+                        });
+                    }else {
+                        layer.open({
+                            title:'登录失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+    });
+
+    $(function(){
+        $('#loginOut').click(function(){
+            $.ajax({
+               url:"{:url('index/login/loginOut')}",
+               type:'post',
+               dataType:'json',
+               success:function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function(){
+                            location.href = data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:'注销失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+               }
+
+            });
+            return false;
+        });
+    });
+
+</script>
+{/block}
+</body>
+</html>

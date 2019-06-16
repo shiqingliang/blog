@@ -1,0 +1,81 @@
+<div class="am-cf admin-main">
+    <!-- sidebar start -->
+    <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+        <div class="am-offcanvas-bar admin-offcanvas-bar">
+            <ul class="am-list admin-sidebar-list">
+                <li><a href="{:url('admin/index/index')}"><span class="am-icon-home"></span> 首页</a></li>
+
+                <li class="am-panel">
+                    <a data-am-collapse="{parent: '#collapase-nav-1', target: '#column-nav'}">
+                        <i class="am-icon-users am-margin-left-sm am-parent"></i> 栏目管理 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub" id="column-nav">
+                        <li><a href="{:url('admin/cate/list')}"><span class="am-icon-bug"></span> 栏目列表</a></li>
+                        <li><a  href="{:url('admin/cate/add')}"><span class="am-icon-puzzle-piece"></span> 栏目添加</a></li>
+                    </ul>
+                </li>
+
+                <li class="am-parent">
+                    <a data-am-collapse="{parent: '#collapase-nav-1', target: '#oypage-nav'}">
+                        <i class="am-icon-users am-margin-left-sm"></i> 通用页面 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub" id="oypage-nav">
+                        <li><a href="{:url('admin/oypage/no404')}"><span class="am-icon-bug"></span> 404</a></li>
+                        <li><a  href="{:url('admin/oypage/help')}"><span class="am-icon-puzzle-piece"></span> 帮助页</a></li>
+                    </ul>
+                </li>
+
+                <li class="am-panel">
+                    <a data-am-collapse="{parent: '#collapase-nav-1', target: '#page-nav'}">
+                        <i class="am-icon-file am-margin-left-sm"></i> 文章管理 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub" id="page-nav">
+                        <li><a href="{:url('admin/Article/list')}"><span class="am-icon-bug"></span>文章列表</a></li>
+                        <li><a  href="{:url('admin/Article/add')}"><span class="am-icon-puzzle-piece"></span> 文章添加</a></li>
+                    </ul>
+                </li>
+
+                <li class="am-panel">
+                    <a data-am-collapse="{parent: '#collapase-nav-1', target: '#Member-nav'}">
+                        <i class="am-icon-users am-margin-left-sm"></i> 会员管理 <i class="am-icon-angle-right am-fr am-margin-right"></i>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub" id="Member-nav">
+                        <li><a href="{:url('admin/member/lis')}"><span class="am-icon-bug"></span> 会员列表</a></li>
+                        <li><a  href="{:url('admin/member/add')}"><span class="am-icon-puzzle-piece"></span>会员添加</a></li>
+                    </ul>
+                </li>
+
+                <li class="am-panel">
+                    <a data-am-collapse="{parent: '#collapase-nav-1', target: '#user-nav'}">
+                        <i class="am-icon-users am-margin-left-sm"></i> 评论管理<i class="am-icon-angle-right am-fr am-margin-right"></i>
+                    </a>
+                    <ul class="am-list am-collapse admin-sidebar-sub" id="user-nav">
+                        <li><a href="{:url('admin/comment/lis')}"><span class="am-icon-bug"></span>评论列表列表 </a></li>
+                    </ul>
+                </li>
+
+                <li><a href="admin-table.html"><span class="am-icon-table"></span> 日志查看</a></li>
+                <li><a href="admin-form.html"><span class="am-icon-pencil-square-o"></span> 是是是</a></li>
+                <li><a href="{:url('admin/login/logout')}"><span class="am-icon-sign-out"></span> 注销</a></li>
+            </ul>
+
+
+<!--ddddddddddddddddddd-->
+
+            <!--ddddddddddddddddddd-->
+            <div class="am-panel am-panel-default admin-sidebar-panel">
+                <div class="am-panel-bd">
+                    <p><span class="am-icon-database"></span>后台信息</p>
+                    <p><span >操作系统：</span>PHP_OS</p>
+                    <p><span >运行环境：</span>{$_SERVER["SERVER_SOFTWARE"]}</p>
+                    <p><span >主机名：</span>{$_SERVER['SERVER_NAME']}</p>
+                    <p><span >端口：</span>{$_SERVER['SERVER_PORT']}</p>
+                    <p><span >用户的IP地址：</span>{$_SERVER['REMOTE_ADDR']}</p>
+                    <p><span ></span></p>
+                    <p><span ></span></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar end -->

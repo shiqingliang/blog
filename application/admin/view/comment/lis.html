@@ -1,0 +1,102 @@
+{include file="public/_header"/}
+{include file="public/_left"/}
+
+<style>
+    th,td{
+        text-align: center;
+    }
+</style>
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">评论列表</strong> / <small>Table</small></div>
+        </div>
+
+        <hr>
+
+        
+
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <form class="am-form">
+                    <table class="am-table am-table-striped am-table-hover table-main">
+                        <thead>
+                        <tr>
+                            <th>id</th><th>评论内容</th><th>评论文章</th><th>评论者</th><th class="table-main">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {volist name="comments" id="vo"}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.content}</td>
+                            <td>{$vo.article.title}</td>
+                            <td>{$vo.member.nickname}</td>
+                            <td>
+                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" id="comment_del" dataid="{$vo.id}"><span class="am-icon-pencil-square-o "></span>删除</button>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <div class="am-cf">
+
+                        共 条记录
+                        <div class="am-fr">
+                        </div>
+
+                    </div>
+                    <hr />
+                    <p>注：.....</p>
+                </form>
+            </div>
+
+        </div>
+
+
+{include file="public/floot"/}
+
+<script>
+
+layui.use(['layer', 'form'], function(){
+                    var layer = layui.layer
+                        ,form = layui.form;
+                });
+
+
+   $('#comment_del').click(function () {
+                        var id = $(this).attr('dateid');
+                        layer.confirm('确认删除吗？',{
+                           title:'评论删除',
+                            icon:3,
+                        },function (index) {
+                            layer.close(index);
+                            $.ajax({
+                                url: "{:url('admin/comment/del')}",
+                                type:'post',
+                                data:{id:id},
+                                dataType:'json',
+                                success:function (data) {
+                                    if (data.code == 1){
+                                        layer.msg(data.msg,{
+                                           icon:6,
+                                           time:2000
+                                        },function () {
+                                            location.href = data.url;
+                                        });
+                                    } else {
+                                        layer.open({
+                                            title:'删除失败！',
+                                            content:data.msg,
+                                            icon:5,
+                                            anim:5
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                        return false;
+                    });
+
+</script>

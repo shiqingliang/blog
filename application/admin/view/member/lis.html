@@ -1,0 +1,125 @@
+
+{include file='public/_header' /}
+{include file='public/_left' /}
+<style>
+    .member_jz li{
+        text-align: center;
+    }
+</style>
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">会员列表</strong> / <small>查看会员</small></div>
+        </div>
+
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-md-6">
+                <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span><a href="{:url('admin/member/add')}">新增</a></button>
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-3">
+                <div class="am-input-group am-input-group-sm">
+                    <input type="text" class="am-form-field">
+                    <span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button">搜索</button>
+          </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <table class="am-table am-table-bd am-table-striped admin-content-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th><th>用户名</th><!--<th>昵称</th>--><th>电子邮箱</th><th>管理</th>
+                    </tr>
+                    </thead>
+                    {volist name="members" id="vo"}
+                    <tr><td>{$vo.id}</td><td>{$vo.username}</td><!--<td><a href="#">{$vo.nickname}</a></td> --><td>{$vo.email}</td>
+
+                        <td>  {if session('admin.is_super') == 1 }
+                            <div class="am-dropdown" data-am-dropdown>
+                                <button class="am-btn am-btn-default am-btn-xs am-dropdown-toggle" data-am-dropdown-toggle><span class="am-icon-cog"></span> <span class="am-icon-caret-down"></span></button>
+                                <ul class="am-dropdown-content member_jz">
+                                    <li><a href="{:url('admin/member/edit',['id'=>$vo.id])}">编辑</a></li>
+                                    <li class="member_del" dateid="{$vo.id}"><a>删除</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        {else}
+                        <p>没有权限哟！</p>
+                        {/if}
+                    </tr>
+
+                    {/volist}
+
+
+                </table>
+                <div class="am-cf">
+                    共3条记录
+                    <div class="am-fr">
+                        {$members->render()|replace}
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+            </div>
+        </div>
+
+
+{include file='public/floot'/}
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+
+    $(function () {
+        $('.pagination').addClass('am-pagination');
+        $('.disabled').addClass('am-disabled');
+        $('.active').addClass('am-active');
+    });
+
+    $('.member_del').click(function () {
+        var id = $(this).attr('dateid');
+        layer.confirm('确认删除吗？',{
+            title:'用户删除',
+            icon:3,
+        },function (index) {
+            layer.close(index);
+            $.ajax({
+                url: "{:url('admin/member/del')}",
+                type:'post',
+                data:{id:id},
+                dataType:'json',
+                success:function (data) {
+                    if (data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:2000
+                        },function () {
+                            location.href = data.url;
+                        });
+                    } else {
+                        layer.open({
+                            title:'删除失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+                }
+            });
+        });
+        return false;
+    });
+    </script>

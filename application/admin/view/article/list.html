@@ -1,0 +1,184 @@
+{include file="public/_header"/}
+{include file="public/_left"/}
+<!-- content start -->
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">文章列表</strong> / <small>Table</small></div>
+        </div>
+
+        <hr>
+
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-md-6">
+                <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span><a href="{:url('admin/article/add')}">新增</a></button>
+                        <button type="button" class="am-btn am-btn-default" disabled="disabled"><span class="am-icon-save"></span> 保存</button>
+                        <button type="button" class="am-btn am-btn-default" disabled="disabled"><span class="am-icon-archive"></span> 审核</button>
+                        <button type="button" class="am-btn am-btn-default" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
+                    </div>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-3">
+                <div class="am-form-group">
+                    <select data-am-selected="{btnSize: 'sm'}">
+                        <option value="option1">所有类别</option>
+                        <option value="option2">IT业界</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-3">
+                <div class="am-input-group am-input-group-sm">
+                    <input type="text" class="am-form-field">
+                    <span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button">搜索</button>
+          </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <form class="am-form">
+                    <table class="am-table am-table-bordered am-table-striped am-table-compact">
+                        <thead>
+                        <tr>
+                            <th >id</th>
+                            <th >文章标题</th>
+                            <th >所属导航</th>
+                            <th >推荐</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name="articles" id="vo"}
+                        <tr>
+                            <td >{$vo.id}</td>
+                            <td >{$vo.title}</td>
+                            <td >{$vo.cate.catename}</td>
+                            <td >{if $vo.is_top ==1}<span class="am-text-success">已推荐</span>{else/}<span class="am-text-danger">未推荐</span>{/if}</td>
+                            <td><div >
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span><a href="{:url('admin/article/edit',['id' => $vo.id])}">编辑</a></button>
+                                    {if $vo.is_top == 1}
+                                    <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only am-text-success article-top" istop="{$vo.is_top}" dataid="{$vo.id}"><span class="am-icon-location-arrow"></span>取消推荐</button>
+                                    {else/}
+                                    <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only am-text-danger article-top" istop="{$vo.is_top}" dataid="{$vo.id}"><span class="am-icon-location-arrow"></span>推荐</button>
+                                    {/if}
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o article-del"></span><a href="#" class="am-text-danger cate-del" dataid="{$vo.id}"> 删除</a></button>
+                                </div>
+                            </div></td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <div class="am-cf">
+                        共 条记录
+                        <div class="am-fr">
+                            {$articles->render()|replace}
+                        </div>
+
+                    </div>
+                    <hr />
+                    <p>注：.....</p>
+                </form>
+            </div>
+
+        </div>
+        <style>
+            th{
+                text-align: center;
+            }
+            td{
+                text-align: center;
+            }
+        </style>
+        {include file="public/floot"}
+        <script>
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+            });
+
+            $(function () {
+                $('.pagination').addClass('am-pagination');
+                $('.disabled').addClass('am-disabled');
+                $('.active').addClass('am-active');
+            });
+            $('.article-top').click(function () {
+                var id = $(this).attr('dataid');
+                var is_top = $(this).attr('istop');
+                if (is_top == 1){
+                    var msg = '确定取消推荐吗？';
+                } else {
+                    var msg = '确定推荐吗？'
+                }
+                layer.confirm(msg,{
+                   title:'推荐操作',
+                   icon:3
+                },function (index) {
+                    layer.close(index);
+                    $.ajax({
+                       url:"{:url('admin/article/top')}",
+                        type:'post',
+                        data:{id:id,is_top:is_top},
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.code == 1){
+                                layer.msg(data.msg,{
+                                   icon:6,
+                                   time:2000 
+                                },function () {
+                                    location.href = data.url;
+                                });
+                            }else {
+                                layer.open({
+                                   title:'推荐失败！',
+                                    content:data.msg,
+                                   icon:5,
+                                    anim:5
+                                });
+                            }
+                        }
+                    });
+                });
+                return false;
+            });
+
+            $('.cate-del').click(function () {
+                var id = $(this).attr('dataid');
+                layer.confirm('确认删除吗？',{
+                    title:'文章删除',
+                    icon:3,
+                },function (index) {
+                    layer.close(index);
+                    $.ajax({
+                        url: "{:url('admin/article/del')}",
+                        type:'post',
+                        data:{id:id},
+                        dataType:'json',
+                        success:function (data) {
+                            if (data.code == 1){
+                                layer.msg(data.msg,{
+                                    icon:6,
+                                    time:2000
+                                },function () {
+                                    location.href = data.url;
+                                });
+                            } else {
+                                layer.open({
+                                    title:'删除失败！',
+                                    content:data.msg,
+                                    icon:5,
+                                    anim:5
+                                });
+                            }
+                        }
+                    });
+                });
+                return false;
+            });
+
+        </script>

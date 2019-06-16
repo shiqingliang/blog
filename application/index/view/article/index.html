@@ -1,0 +1,301 @@
+{extend name="public/base"}
+{block name="body"}
+    <style>
+        @media only screen and (min-width: 641px) {
+            .am-offcanvas {
+                display: block;
+                position: static;
+                background: none;
+            }
+
+            .am-offcanvas-bar {
+                position: static;
+                width: auto;
+                background: none;
+                -webkit-transform: translate3d(0, 0, 0);
+                -ms-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+            }
+            .am-offcanvas-bar:after {
+                content: none;
+            }
+
+        }
+
+        @media only screen and (max-width: 640px) {
+            .am-offcanvas-bar .am-nav>li>a {
+                color:#ccc;
+                border-radius: 0;
+                border-top: 1px solid rgba(0,0,0,.3);
+                box-shadow: inset 0 1px 0 rgba(255,255,255,.05)
+            }
+
+            .am-offcanvas-bar .am-nav>li>a:hover {
+                background: #404040;
+                color: #fff
+            }
+
+            .am-offcanvas-bar .am-nav>li.am-nav-header {
+                color: #777;
+                background: #404040;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+                text-shadow: 0 1px 0 rgba(0,0,0,.5);
+                border-top: 1px solid rgba(0,0,0,.3);
+                font-weight: 400;
+                font-size: 75%
+            }
+
+            .am-offcanvas-bar .am-nav>li.am-active>a {
+                background: #1a1a1a;
+                color: #fff;
+                box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+            }
+
+            .am-offcanvas-bar .am-nav>li+li {
+                margin-top: 0;
+            }
+        }
+
+        .my-head {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .my-button {
+            position: fixed;
+            top: 0;
+            right: 0;
+            border-radius: 0;
+        }
+        .my-sidebar {
+            padding-right: 0;
+            border-right: 1px solid #eeeeee;
+        }
+
+        .my-footer {
+            border-top: 1px solid #eeeeee;
+            padding: 10px 0;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+<header class="am-g my-head">
+    <div class="am-u-sm-12 am-article">
+        <h1 class="am-article-title">{$articleInfo.title}</h1>
+        <p class="am-article-meta">{$articleInfo.author}(收集作)</p>
+    </div>
+</header>
+<hr class="am-article-divider"/>
+<div class="am-g am-g-fixed">
+    <div class="am-u-md-9 am-u-md-push-3">
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <div class="am-cf am-article">
+
+                    <div>
+                        <p>
+                            {$articleInfo.content}
+                        </p>
+
+                    </div>
+                    <div class="am-align-right"><img src="http://pntid72wo.bkt.clouddn.com/30f54201903041526307274.png" alt="" width="240"></div>
+                    <hr class="am-article-divider">
+                    <h2>作者简介</h2>
+                    <p>《{$articleInfo.title}》作者：{$articleInfo.author}。爱编程，爱开源，</p>
+                    <hr class="am-article-divider">
+                    <h2>文章概要</h2>
+                    <p>{$articleInfo.desc}</p>
+
+                </div>
+
+
+                <form  class="am-form">
+                    <input type="hidden" name="article_id" value="{$articleInfo.id}">
+                    <input type="hidden" name="member_id" value="{:session('index.id')}">
+                    <fieldset>  
+                        <div class="am-form-group">
+                            <label for="doc-ta-1"><h2>评论</h2></label>
+                            <textarea class="" rows="4" name="content" id="doc-ta-1"></textarea>
+                        </div>
+                    </fieldset>
+                    <p><button type="submit" id="tj"  class="am-btn am-btn-default">提交</button></p>
+                </form>
+                <hr/>
+                {volist name="comments" id="vo"}
+                <ul class="am-comments-list">
+                    <li class="am-comment">
+                        <a href="#link-to-user-home">
+                            <img src="http://s.amazeui.org/media/i/demos/bw-2014-06-19.jpg?imageView/1/w/96/h/96/q/80" alt="" class="am-comment-avatar" width="48" height="48">
+                        </a>
+                        <div class="am-comment-main">
+                            <header class="am-comment-hd">
+                                <div class="am-comment-meta">
+                                    <a href="#link-to-user" class="am-comment-author">{$vo.member.nickname}</a> 评论于 <time datetime="2013-07-27T04:54:29-07:00" title="2013年7月27日 下午7:54 格林尼治标准时间+0800">{$vo.create_time}</time>
+                                </div>
+                            </header>
+                            <div class="am-comment-bd">
+                                <p>{$vo.content}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                {/volist}
+            </div>
+        </div>
+    </div>
+
+    <!--左面导航栏-->
+    <div class="am-u-md-3 am-u-md-pull-9 my-sidebar" >
+        <div class="am-offcanvas" id="sidebar">
+            <div class="am-offcanvas-bar">
+                <ul class="am-nav" style="background-image:url(http://pntid72wo.bkt.clouddn.com/0403b201903041526083194.png)">
+                    <li><a href="#">{$articleInfo.title}</a></li>
+                    <li class="am-nav-header">目录</li>
+                    <li><a href="#">原文</a></li>
+                    <li><a href="#">作者简介</a></li>
+                    <li><a href="#">文章赏析</a></li>
+                    <li><a href="#">读者评论</a></li>
+                    <li><img src="http://pntid72wo.bkt.clouddn.com/0403b201903041526083194.png" alt="" width="200"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<footer class="my-footer">
+    <p>sidebar template<br><small>© Copyright XXX. by the AmazeUI Team.</small></p>
+</footer>
+
+<script src="__STATICA__/js/jquery-1.8.2.js"></script>
+<script src="__STATICA__/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__STATICA__/js/amazeui.min.js"></script>
+<script src="__STATICA__/js/app.js"></script>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+
+    $(function () {
+            $('.pagination').addClass('am-pagination');
+            $('.disabled').addClass('am-disabled');
+            $('.active').addClass('am-active');
+        });
+    //登录
+    $(function () {
+        $('#Login').click(function () {
+            $.ajax({
+                url:"{:url('index/login/login')}",
+                type:'post',
+                data:$('form').serialize(),
+                dataType:'json',
+                success:function (data) {
+                    if (data.code == 1){
+                        layer.msg(data.msg, {
+                            icon: 6,
+                            time: 1000
+                        },function () {
+                            location.href = '';
+                        });
+                    }else {
+                        layer.open({
+                            title:'登录失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+    });
+//注销
+    $(function(){
+        $('#loginOut').click(function(){
+            $.ajax({
+               url:"{:url('index/login/loginOut')}",
+               type:'post',
+               dataType:'json',
+               success:function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function(){
+                            location.href = '';
+                        });
+                    }else{
+                        layer.open({
+                            title:'注销失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+               }
+
+            });
+            return false;
+        });
+    });
+
+</script>
+
+</script>
+<script>
+       layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+    });
+    
+
+//评论提交
+
+    $('#tj').click(function(){
+        if("{:session('?index.id')}"){
+            $.ajax({
+               url:"{:url('index/article/comment_add')}",
+               type:'post',
+               data:$('form').serialize(),
+               dataType:'json',
+               success:function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function(){
+                            location.href = data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:'评论失败！',
+                            content:data.msg,
+                            icon:5,
+                            anim:5
+                        });
+                    }
+               }
+
+            });
+        }else{
+            layer.msg('请先登录后再评论！', function(){
+        }); 
+        }
+        return false;
+    });
+
+
+
+</script>
+</body>
+</html>
+{/block}
